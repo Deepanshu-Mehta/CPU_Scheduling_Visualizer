@@ -281,11 +281,11 @@ export function GanttChart({ data, processes }) {
           </div>
         )}
         <div className="legend-item">
-          <span className="legend-color" style={{ background: CONTEXT_SWITCH_COLOR }} />
+          <span className="legend-color context-switch" />
           <span className="legend-label">Context Switch</span>
         </div>
         <div className="legend-item">
-          <span className="legend-color" style={{ background: IDLE_COLOR }} />
+          <span className="legend-color idle" />
           <span className="legend-label">Idle</span>
         </div>
       </div>

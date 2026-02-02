@@ -161,7 +161,7 @@
 .gantt-legend {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 20px;
   padding-top: 16px;
   border-top: 1px solid var(--border-color);
 }
@@ -169,18 +169,41 @@
 .legend-item {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .legend-color {
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 18px;
   border-radius: 4px;
   flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Striped pattern for context switch */
+.legend-color.context-switch {
+  background: repeating-linear-gradient(
+    45deg,
+    #334155,
+    #334155 3px,
+    #475569 3px,
+    #475569 6px
+  ) !important;
+}
+
+/* Dashed pattern for idle */
+.legend-color.idle {
+  background: repeating-linear-gradient(
+    90deg,
+    #1e293b,
+    #1e293b 4px,
+    #334155 4px,
+    #334155 8px
+  ) !important;
 }
 
 .legend-label {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: var(--text-secondary);
   font-weight: 500;
 }
