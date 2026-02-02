@@ -1,0 +1,149 @@
+/* MLFQ Visualization Styles */
+
+.mlfq-visualization {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
+}
+
+.mlfq-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.mlfq-header h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  color: var(--text-primary);
+}
+
+.mlfq-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mlfq-queue {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  border-left: 4px solid var(--queue-color, var(--border-color));
+  transition: all 0.3s ease;
+}
+
+.mlfq-queue.has-processes {
+  background: rgba(99, 102, 241, 0.05);
+}
+
+.queue-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 80px;
+}
+
+.queue-name {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.queue-priority {
+  font-size: 0.7rem;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.queue-tq {
+  font-size: 0.75rem;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text-secondary);
+}
+
+.queue-processes {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.empty-indicator {
+  color: var(--text-tertiary);
+  font-size: 0.85rem;
+}
+
+.mlfq-process {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 14px;
+  background: var(--process-color, var(--primary));
+  color: white;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  animation: processEnter 0.3s ease-out;
+}
+
+.mlfq-process.running {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+  animation: runningPulse 1.5s infinite;
+}
+
+.running-indicator {
+  font-size: 0.7rem;
+}
+
+@keyframes processEnter {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes runningPulse {
+  0%, 100% { 
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+  }
+  50% { 
+    box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.1);
+  }
+}
+
+.mlfq-legend {
+  display: flex;
+  gap: 24px;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
+}
+
+.mlfq-legend .legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.arrow-down {
+  color: var(--danger);
+  font-weight: bold;
+}
+
+.arrow-up {
+  color: var(--success);
+  font-weight: bold;
+}

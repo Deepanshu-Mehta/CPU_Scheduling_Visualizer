@@ -9,6 +9,8 @@ import { SimulationControls } from './components/SimulationControls.jsx';
 import { MetricsPane } from './components/MetricsPane.jsx';
 import { ProcessStateTable } from './components/ProcessStateTable.jsx';
 import { ComparisonDashboard } from './components/ComparisonDashboard.jsx';
+import { QueueVisualization } from './components/QueueVisualization.jsx';
+import { MLFQVisualization } from './components/MLFQVisualization.jsx';
 import { GanttChartContainer } from './visualization/GanttChart.jsx';
 import { exportToJSON, exportToPDF } from './utils/exportUtils.js';
 import { SimulationState } from './simulation/SimulationController.js';
@@ -100,6 +102,8 @@ function AppContent() {
             {/* Main Content - Visualization */}
             <section className="content">
               <GanttChartContainer />
+              <QueueVisualization />
+              <MLFQVisualization />
               <div className="content-grid">
                 <ProcessStateTable />
                 <MetricsPane />
