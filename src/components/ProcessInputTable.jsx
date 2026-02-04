@@ -16,7 +16,6 @@ export function ProcessInputTable() {
     addIOBurst,
     removeIOBurst,
     updateIOBurst,
-    algorithms,
   } = useSimulation();
 
   const isRunning = state.simulationState !== SimulationState.IDLE && 
