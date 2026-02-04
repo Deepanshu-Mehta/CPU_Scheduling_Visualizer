@@ -38,7 +38,7 @@ export function exportComparisonToJSON(data, filename = 'comparison-results.json
 /**
  * Generate and export PDF report
  */
-export async function exportToPDF(data, filename = 'simulation-report.pdf') {
+export async function exportToPDF(data, _filename = 'simulation-report.pdf') {
   // Create a simple HTML report and use print functionality
   const htmlContent = generateHTMLReport(data);
   
@@ -191,7 +191,7 @@ export function importFromJSON(file) {
         } else {
           reject(new Error('Invalid file format: missing processes array'));
         }
-      } catch (err) {
+      } catch (_err) {
         reject(new Error('Failed to parse JSON file'));
       }
     };
