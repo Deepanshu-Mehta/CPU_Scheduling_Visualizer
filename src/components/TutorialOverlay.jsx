@@ -91,86 +91,91 @@ export function TutorialOverlay({ onComplete }) {
   useEffect(() => {
     if (!isVisible) return;
 
-    const step = TUTORIAL_STEPS[currentStep];
-    
-    if (!step.target) {
-      // Center modal for welcome/complete steps
-      setSpotlightStyle({ display: 'none' });
-      setTooltipStyle({
-        position: 'fixed',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)'
-      });
-      return;
-    }
-
-    const element = document.querySelector(step.target);
-    if (!element) {
-      // Element not found, skip to next or show centered
-      setSpotlightStyle({ display: 'none' });
-      setTooltipStyle({
-        position: 'fixed',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)'
-      });
-      return;
-    }
-
-    const rect = element.getBoundingClientRect();
-    const padding = 8;
-
-    // Set spotlight position
-    setSpotlightStyle({
-      display: 'block',
-      top: rect.top - padding,
-      left: rect.left - padding,
-      width: rect.width + padding * 2,
-      height: rect.height + padding * 2
-    });
-
-    // Calculate tooltip position
-    const tooltipOffset = 16;
-    let tooltipPos = {};
-
-    switch (step.position) {
-      case 'right':
-        tooltipPos = {
-          top: rect.top,
-          left: rect.right + tooltipOffset
-        };
-        break;
-      case 'left':
-        tooltipPos = {
-          top: rect.top,
-          right: window.innerWidth - rect.left + tooltipOffset
-        };
-        break;
-      case 'top':
-        tooltipPos = {
-          bottom: window.innerHeight - rect.top + tooltipOffset,
-          left: rect.left
-        };
-        break;
-      case 'bottom':
-        tooltipPos = {
-          top: rect.bottom + tooltipOffset,
-          left: rect.left
-        };
-        break;
-      default:
-        tooltipPos = {
+    const updatePositions = () => {
+      const step = TUTORIAL_STEPS[currentStep];
+      
+      if (!step.target) {
+        // Center modal for welcome/complete steps
+        setSpotlightStyle({ display: 'none' });
+        setTooltipStyle({
+          position: 'fixed',
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)'
-        };
-    }
+        });
+        return;
+      }
 
-    setTooltipStyle({
-      position: 'fixed',
-      ...tooltipPos
-    });
+      const element = document.querySelector(step.target);
+      if (!element) {
+        // Element not found, show centered
+        setSpotlightStyle({ display: 'none' });
+        setTooltipStyle({
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)'
+        });
+        return;
+      }
+
+      const rect = element.getBoundingClientRect();
+      const padding = 8;
+
+      // Set spotlight position
+      setSpotlightStyle({
+        display: 'block',
+        top: rect.top - padding,
+        left: rect.left - padding,
+        width: rect.width + padding * 2,
+        height: rect.height + padding * 2
+      });
+
+      // Calculate tooltip position
+      const tooltipOffset = 16;
+      let tooltipPos = {};
+
+      switch (step.position) {
+        case 'right':
+          tooltipPos = {
+            top: rect.top,
+            left: rect.right + tooltipOffset
+          };
+          break;
+        case 'left':
+          tooltipPos = {
+            top: rect.top,
+            right: window.innerWidth - rect.left + tooltipOffset
+          };
+          break;
+        case 'top':
+          tooltipPos = {
+            bottom: window.innerHeight - rect.top + tooltipOffset,
+            left: rect.left
+          };
+          break;
+        case 'bottom':
+          tooltipPos = {
+            top: rect.bottom + tooltipOffset,
+            left: rect.left
+          };
+          break;
+        default:
+          tooltipPos = {
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)'
+          };
+      }
+
+      setTooltipStyle({
+        position: 'fixed',
+        ...tooltipPos
+      });
+    };
+
+    // Use requestAnimationFrame to batch DOM reads/writes
+    requestAnimationFrame(updatePositions);
   }, [currentStep, isVisible]);
 
   const handleComplete = useCallback(() => {
