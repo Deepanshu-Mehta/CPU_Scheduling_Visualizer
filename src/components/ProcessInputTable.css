@@ -3,7 +3,7 @@
 .process-input-table {
   background: var(--card-bg);
   border-radius: 16px;
-  padding: 24px;
+  padding: 34px;
   box-shadow: var(--shadow-md);
   border: 1px solid var(--border-color);
 }

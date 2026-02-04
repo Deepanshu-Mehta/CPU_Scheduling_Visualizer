@@ -27,6 +27,7 @@ export function GanttChart({ data, processes }) {
   const svgRef = useRef(null);
   const containerRef = useRef(null);
   const tooltipRef = useRef(null);
+  const wrapperRef = useRef(null);
   const [zoomLevel, setZoomLevel] = useState(1);
   const [autoScroll, setAutoScroll] = useState(true);
   
@@ -153,16 +154,25 @@ export function GanttChart({ data, processes }) {
           content = `<strong>CPU Idle</strong><br/>Time: ${d.startTime} - ${d.endTime}`;
         }
         
+        // Calculate position relative to container
+        const containerRect = wrapperRef.current ? wrapperRef.current.getBoundingClientRect() : { left: 0, top: 0 };
+        const x = event.clientX - containerRect.left;
+        const y = event.clientY - containerRect.top;
+
         tooltip
           .style('opacity', 1)
           .html(content)
-          .style('left', `${event.pageX + 10}px`)
-          .style('top', `${event.pageY - 10}px`);
+          .style('left', `${x + 10}px`)
+          .style('top', `${y + 20}px`);
       })
       .on('mousemove', function(event) {
+        const containerRect = wrapperRef.current ? wrapperRef.current.getBoundingClientRect() : { left: 0, top: 0 };
+        const x = event.clientX - containerRect.left;
+        const y = event.clientY - containerRect.top;
+
         tooltip
-          .style('left', `${event.pageX + 10}px`)
-          .style('top', `${event.pageY - 10}px`);
+          .style('left', `${x + 10}px`)
+          .style('top', `${y + 20}px`);
       })
       .on('mouseleave', function() {
         d3.select(this).style('opacity', 0.85);
@@ -212,7 +222,7 @@ export function GanttChart({ data, processes }) {
   const handleZoomReset = () => setZoomLevel(1);
 
   return (
-    <div className="gantt-chart-container">
+    <div className="gantt-chart-container" ref={wrapperRef}>
       <div className="gantt-header">
         <h3>CPU Gantt Chart</h3>
         <div className="gantt-controls">
