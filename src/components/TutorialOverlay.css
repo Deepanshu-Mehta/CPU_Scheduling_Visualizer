@@ -1,0 +1,233 @@
+/* Tutorial Overlay Styles */
+
+.tutorial-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+/* Dark backdrop with hole for spotlight */
+.tutorial-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  pointer-events: auto;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Spotlight effect to highlight elements */
+.tutorial-spotlight {
+  position: fixed;
+  border-radius: 12px;
+  box-shadow: 
+    0 0 0 9999px rgba(0, 0, 0, 0.75),
+    0 0 20px rgba(99, 102, 241, 0.5);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 10001;
+}
+
+/* Tooltip card */
+.tutorial-tooltip {
+  background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 16px;
+  padding: 24px;
+  max-width: 380px;
+  min-width: 320px;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    0 0 60px rgba(99, 102, 241, 0.15);
+  pointer-events: auto;
+  z-index: 10002;
+  animation: tooltipEnter 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes tooltipEnter {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.tooltip-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.tooltip-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.3;
+}
+
+.tooltip-close {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #888;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.tooltip-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.tooltip-content {
+  color: #a0a0b0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0 0 20px 0;
+}
+
+/* Progress dots */
+.tutorial-progress {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.progress-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.progress-dot.active {
+  background: #6366f1;
+  transform: scale(1.25);
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+}
+
+.progress-dot.completed {
+  background: #10b981;
+}
+
+/* Action buttons */
+.tooltip-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.tooltip-nav {
+  display: flex;
+  gap: 8px;
+}
+
+.tooltip-btn {
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.tooltip-btn.primary {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+}
+
+.tooltip-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+
+.tooltip-btn.secondary {
+  background: transparent;
+  color: #888;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tooltip-btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #aaa;
+}
+
+.tooltip-btn:not(.primary):not(.secondary) {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ccc;
+}
+
+.tooltip-btn:not(.primary):not(.secondary):hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.tooltip-hint {
+  text-align: center;
+  color: #666;
+  font-size: 0.75rem;
+  margin: 16px 0 0 0;
+}
+
+/* Help button in header */
+.help-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  color: #6366f1;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.help-btn:hover {
+  background: rgba(99, 102, 241, 0.25);
+  transform: scale(1.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .tutorial-tooltip {
+    max-width: calc(100vw - 32px);
+    min-width: auto;
+    left: 16px !important;
+    right: 16px !important;
+    transform: none !important;
+  }
+  
+  .tooltip-actions {
+    flex-direction: column;
+  }
+  
+  .tooltip-nav {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
