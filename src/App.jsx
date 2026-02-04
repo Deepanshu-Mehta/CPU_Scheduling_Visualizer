@@ -1,7 +1,7 @@
 // Main Application Component
 // CPU Scheduling Visualizer
 
-import React from 'react';
+import React, { useState } from 'react';
 import { SimulationProvider, useSimulation } from './context/SimulationContext.jsx';
 import { ProcessInputTable } from './components/ProcessInputTable.jsx';
 import { AlgorithmSelector } from './components/AlgorithmSelector.jsx';
@@ -12,12 +12,19 @@ import { ComparisonDashboard } from './components/ComparisonDashboard.jsx';
 import { QueueVisualization } from './components/QueueVisualization.jsx';
 import { MLFQVisualization } from './components/MLFQVisualization.jsx';
 import { GanttChartContainer } from './visualization/GanttChart.jsx';
+import { TutorialOverlay } from './components/TutorialOverlay.jsx';
 import { exportToJSON, exportToPDF } from './utils/exportUtils.js';
 import { SimulationState } from './simulation/SimulationController.js';
 import './App.css';
 
 function AppContent() {
   const { state, setActiveTab, setComparisonMode } = useSimulation();
+  const [showTutorial, setShowTutorial] = useState(false);
+
+  const handleStartTutorial = () => {
+    localStorage.removeItem('cpu-scheduler-tutorial-completed');
+    setShowTutorial(true);
+  };
 
   const handleExportJSON = () => {
     if (state.fullGanttChart.length > 0) {
@@ -52,6 +59,9 @@ function AppContent() {
 
   return (
     <div className="app">
+      {/* Tutorial Overlay */}
+      {showTutorial && <TutorialOverlay onComplete={() => setShowTutorial(false)} />}
+      {!showTutorial && <TutorialOverlay onComplete={() => {}} />}
       {/* Header */}
       <header className="app-header">
         <div className="header-content">
@@ -84,6 +94,13 @@ function AppContent() {
                 </button>
               </>
             )}
+            <button 
+              className="help-btn" 
+              onClick={handleStartTutorial}
+              title="Start Tutorial"
+            >
+              ?
+            </button>
           </div>
         </div>
       </header>
