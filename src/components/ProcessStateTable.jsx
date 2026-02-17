@@ -6,6 +6,7 @@ import React, { useMemo } from 'react';
 import { useSimulation } from '../context/SimulationContext.jsx';
 import { ProcessState } from '../core/PCB.js';
 import { SimulationState } from '../simulation/SimulationController.js';
+import { QUEUE_NAMES, QUEUE_COLORS } from '../utils/colors.js';
 import './ProcessStateTable.css';
 
 const stateConfig = {
@@ -15,9 +16,6 @@ const stateConfig = {
   [ProcessState.WAITING]: { color: 'orange', label: 'Waiting' },
   [ProcessState.TERMINATED]: { color: 'purple', label: 'Terminated' },
 };
-
-const QUEUE_NAMES = ['Q0', 'Q1', 'Q2'];
-const QUEUE_COLORS = ['#10b981', '#f59e0b', '#ef4444'];
 
 export function ProcessStateTable() {
   const { state } = useSimulation();

@@ -5,12 +5,8 @@ import React, { useMemo } from 'react';
 import { useSimulation } from '../context/SimulationContext.jsx';
 import { ProcessState } from '../core/PCB.js';
 import { SimulationState } from '../simulation/SimulationController.js';
+import { PROCESS_COLORS } from '../utils/colors.js';
 import './MLFQVisualization.css';
-
-const PROCESS_COLORS = [
-  '#6366f1', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981',
-  '#06b6d4', '#3b82f6', '#f97316', '#84cc16', '#ef4444',
-];
 
 const QUEUE_CONFIG = [
   { level: 0, name: 'Q0', priority: 'High', tq: 4, color: '#10b981' },

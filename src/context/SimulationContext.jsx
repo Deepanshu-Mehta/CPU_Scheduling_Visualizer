@@ -37,6 +37,9 @@ const initialState = {
   speed: 1,
   progress: 0,
 
+  // Algorithm name (for display)
+  algorithmName: 'FCFS',
+
   // Comparison mode
   comparisonMode: false,
   comparisonAlgorithms: ['FCFS', 'SJF', 'SRTF'],
@@ -165,11 +168,14 @@ function simulationReducer(state, action) {
         )
       };
 
-    case ActionTypes.SET_ALGORITHM:
+    case ActionTypes.SET_ALGORITHM: {
+      const algoInfo = ALGORITHMS[action.payload];
       return {
         ...state,
-        selectedAlgorithm: action.payload
+        selectedAlgorithm: action.payload,
+        algorithmName: algoInfo ? algoInfo.name : action.payload,
       };
+    }
 
     case ActionTypes.SET_ALGORITHM_OPTIONS:
       return {
@@ -239,6 +245,30 @@ function simulationReducer(state, action) {
       return {
         ...state,
         showAdvancedOptions: !state.showAdvancedOptions
+      };
+
+    // New action types for App.jsx features
+    case 'LOAD_PROCESSES':
+      return {
+        ...state,
+        processInputs: action.payload,
+        nextProcessId: Math.max(...action.payload.map(p => p.id), 0) + 1,
+        // Reset simulation when loading new processes
+        simulationState: SimulationState.IDLE,
+        currentTime: 0,
+        ganttChart: [],
+        fullGanttChart: [],
+        stateTransitions: [],
+        processStates: [],
+        metrics: null,
+        progress: 0,
+      };
+
+    case 'SELECT_ALGORITHM':
+      return {
+        ...state,
+        selectedAlgorithm: action.payload,
+        algorithmName: action.payload,
       };
 
     default:
@@ -374,6 +404,7 @@ export function SimulationProvider({ children }) {
 
   const value = {
     state,
+    dispatch,
     algorithmList: getAlgorithmList(),
     algorithms: ALGORITHMS,
 

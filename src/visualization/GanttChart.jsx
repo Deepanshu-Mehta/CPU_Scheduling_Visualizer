@@ -4,24 +4,9 @@
 import React, { useRef, useEffect, useMemo, useState } from 'react';
 import * as d3 from 'd3';
 import { useSimulation } from '../context/SimulationContext.jsx';
+import { SimulationState } from '../simulation/SimulationController.js';
+import { PROCESS_COLORS, CONTEXT_SWITCH_COLOR, IDLE_COLOR } from '../utils/colors.js';
 import './GanttChart.css';
-
-// Color palette for processes
-const PROCESS_COLORS = [
-  '#6366f1', // Indigo
-  '#8b5cf6', // Purple
-  '#ec4899', // Pink
-  '#f59e0b', // Amber
-  '#10b981', // Emerald
-  '#06b6d4', // Cyan
-  '#3b82f6', // Blue
-  '#f97316', // Orange
-  '#84cc16', // Lime
-  '#ef4444', // Red
-];
-
-const CONTEXT_SWITCH_COLOR = '#334155';
-const IDLE_COLOR = '#1e293b';
 
 export function GanttChart({ data, processes }) {
   const svgRef = useRef(null);
@@ -125,7 +110,7 @@ export function GanttChart({ data, processes }) {
       .attr('class', 'bar-rect')
       .attr('x', d => xScale(d.startTime))
       .attr('y', 0)
-      .attr('width', d => Math.max(2, xScale(d.duration) - 1))
+      .attr('width', d => Math.max(2, xScale(d.endTime) - xScale(d.startTime) - 1))
       .attr('height', innerHeight)
       .attr('rx', 4)
       .attr('fill', d => {
@@ -185,7 +170,7 @@ export function GanttChart({ data, processes }) {
     // Add process label inside bar
     barsEnter.append('text')
       .attr('class', 'bar-label')
-      .attr('x', d => xScale(d.startTime) + Math.max(2, xScale(d.duration) - 1) / 2)
+      .attr('x', d => xScale(d.startTime) + Math.max(2, xScale(d.endTime) - xScale(d.startTime) - 1) / 2)
       .attr('y', innerHeight / 2)
       .attr('dy', '0.35em')
       .attr('text-anchor', 'middle')
@@ -193,7 +178,7 @@ export function GanttChart({ data, processes }) {
       .attr('font-size', '11px')
       .attr('font-weight', '600')
       .text(d => {
-        const barWidth = xScale(d.duration);
+        const barWidth = xScale(d.endTime) - xScale(d.startTime);
         if (d.type === 'PROCESS' && barWidth >= 20) return `P${d.pid}`;
         if (d.type === 'CONTEXT_SWITCH' && barWidth >= 20) return 'CS';
         return '';
@@ -206,7 +191,7 @@ export function GanttChart({ data, processes }) {
       .transition()
       .duration(200)
       .attr('x', d => xScale(d.startTime))
-      .attr('width', d => Math.max(2, xScale(d.duration) - 1));
+      .attr('width', d => Math.max(2, xScale(d.endTime) - xScale(d.startTime) - 1));
 
     // Exit
     bars.exit()
@@ -307,7 +292,7 @@ export function GanttChart({ data, processes }) {
 export function GanttChartContainer() {
   const { state } = useSimulation();
   
-  const chartData = state.simulationState === 'COMPLETED' 
+  const chartData = state.simulationState === SimulationState.COMPLETED 
     ? state.fullGanttChart 
     : state.ganttChart;
 

@@ -1,0 +1,78 @@
+/* Per-Process Metrics Table Styles */
+
+.per-process-table {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 12px;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.ppt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.ppt-header h3 {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.ppt-algo {
+  font-size: 0.75rem;
+  color: var(--primary);
+  background: rgba(99, 102, 241, 0.15);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.ppt-container {
+  overflow-x: auto;
+}
+
+.per-process-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.per-process-table th {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  font-weight: 600;
+  padding: 8px 10px;
+  text-align: center;
+  border-bottom: 2px solid var(--border-color);
+  white-space: nowrap;
+}
+
+.per-process-table td {
+  padding: 8px 10px;
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.per-process-table tbody tr:hover {
+  background: rgba(99, 102, 241, 0.05);
+}
+
+.per-process-table tfoot td {
+  background: rgba(99, 102, 241, 0.08);
+  border-top: 2px solid var(--border-color);
+  font-weight: 600;
+}
+
+.per-process-table tfoot strong {
+  color: var(--primary);
+}
+
+.ppt-pid {
+  font-weight: 700;
+  color: var(--primary);
+  font-family: 'JetBrains Mono', monospace;
+}

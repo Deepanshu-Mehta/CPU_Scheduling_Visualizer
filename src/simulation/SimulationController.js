@@ -2,6 +2,7 @@
 
 import { PCB, ProcessState, BurstType, createSimplePCB } from '../core/PCB.js';
 import { runAlgorithm, ALGORITHMS } from '../algorithms/index.js';
+import { consolidateGanttChart } from '../utils/schedulerUtils.js';
 
 export const SimulationState = {
   IDLE: 'IDLE',
@@ -319,22 +320,8 @@ export class SimulationController {
       ? this.simulationResult.rawGanttChart.slice(0, this.currentTickIndex)
       : [];
 
-    // Consolidate visible gantt
-    const consolidatedGantt = [];
-    for (const entry of visibleGantt) {
-      const last = consolidatedGantt[consolidatedGantt.length - 1];
-      if (last && last.type === entry.type && last.pid === entry.pid) {
-        last.endTime = entry.time + 1;
-        last.duration++;
-      } else {
-        consolidatedGantt.push({
-          ...entry,
-          startTime: entry.time,
-          endTime: entry.time + 1,
-          duration: 1
-        });
-      }
-    }
+    // Consolidate visible gantt using shared utility
+    const consolidatedGantt = consolidateGanttChart(visibleGantt);
 
     // Get current process states up to currentTickIndex
     const currentTransitions = this.simulationResult
