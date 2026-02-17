@@ -50,6 +50,14 @@ export function MetricsPane() {
       color: 'success',
       description: 'Percentage of time CPU was busy',
     },
+    {
+      label: 'Throughput',
+      value: formatNumber(metrics.throughput, 3),
+      unit: 'proc/unit',
+      icon: '🔄',
+      color: 'info',
+      description: 'Processes completed per time unit',
+    },
   ];
 
   const additionalMetrics = [
@@ -116,6 +124,7 @@ export function MetricsPane() {
             <p><strong>Waiting Time</strong> = Turnaround Time − Total CPU Burst</p>
             <p><strong>Response Time</strong> = First CPU Access − Arrival Time</p>
             <p><strong>CPU Utilization</strong> = (CPU Busy Time / Total Time) × 100%</p>
+            <p><strong>Throughput</strong> = Completed Processes / Total Time</p>
           </div>
         </details>
       </div>

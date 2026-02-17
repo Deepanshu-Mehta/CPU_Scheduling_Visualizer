@@ -1,0 +1,105 @@
+/* State Transition Diagram Styles */
+
+.state-transition-diagram {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 12px;
+}
+
+.std-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.std-header h3 {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.std-empty {
+  text-align: center;
+  color: var(--text-tertiary);
+  padding: 24px;
+  font-size: 0.85rem;
+}
+
+.std-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.std-process-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.std-pid {
+  font-weight: 700;
+  font-size: 0.8rem;
+  min-width: 32px;
+  text-align: right;
+}
+
+.std-timeline {
+  flex: 1;
+  display: flex;
+  height: 24px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--bg-primary);
+}
+
+.std-segment {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2px;
+  transition: opacity 0.2s;
+  cursor: default;
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.std-segment:hover {
+  opacity: 0.85;
+  filter: brightness(1.2);
+}
+
+.std-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 2px;
+}
+
+.std-legend {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.std-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.std-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.std-legend-label {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}

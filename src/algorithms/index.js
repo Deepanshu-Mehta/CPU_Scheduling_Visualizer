@@ -3,6 +3,7 @@
 
 import { ProcessState, BurstType } from '../core/PCB.js';
 import { ReadyQueue, IOQueue, MLFQueue } from '../core/Queues.js';
+import { consolidateGanttChart, calculateMetrics } from '../utils/schedulerUtils.js';
 
 /**
  * Base scheduler simulation that runs a complete scheduling cycle
@@ -217,49 +218,16 @@ function runSchedulerSimulation(processes, selectNext, options = {}) {
     currentTime++;
   }
 
-  // Consolidate Gantt chart (merge consecutive same-process blocks)
-  const consolidatedGantt = [];
-  for (const entry of ganttChart) {
-    const last = consolidatedGantt[consolidatedGantt.length - 1];
-    if (last && last.type === entry.type && last.pid === entry.pid) {
-      last.endTime = entry.time + 1;
-      last.duration++;
-    } else {
-      consolidatedGantt.push({
-        ...entry,
-        startTime: entry.time,
-        endTime: entry.time + 1,
-        duration: 1
-      });
-    }
-  }
-
-  // Calculate metrics
-  const completedProcs = procs.filter(p => p.state === ProcessState.TERMINATED);
-  const avgTurnaroundTime = completedProcs.length > 0
-    ? completedProcs.reduce((sum, p) => sum + p.getTurnaroundTime(), 0) / completedProcs.length
-    : 0;
-  const avgWaitingTime = completedProcs.length > 0
-    ? completedProcs.reduce((sum, p) => sum + p.getWaitingTime(), 0) / completedProcs.length
-    : 0;
-  const avgResponseTime = completedProcs.length > 0
-    ? completedProcs.reduce((sum, p) => sum + p.responseTime, 0) / completedProcs.length
-    : 0;
-  const cpuUtilization = currentTime > 0 ? (cpuBusyTime / currentTime) * 100 : 0;
+  // Consolidate Gantt chart and calculate metrics using shared utilities
+  const consolidatedGantt = consolidateGanttChart(ganttChart);
+  const metrics = calculateMetrics(procs, ganttChart, currentTime, cpuBusyTime);
 
   return {
     ganttChart: consolidatedGantt,
     rawGanttChart: ganttChart,
     stateTransitions,
     processes: procs.map(p => p.toJSON()),
-    metrics: {
-      avgTurnaroundTime,
-      avgWaitingTime,
-      avgResponseTime,
-      cpuUtilization,
-      totalTime: currentTime,
-      contextSwitches: ganttChart.filter(e => e.type === 'CONTEXT_SWITCH').length
-    }
+    metrics
   };
 }
 
@@ -637,49 +605,16 @@ export function runMLFQ(processes, options = {}) {
     currentTime++;
   }
 
-  // Consolidate Gantt chart
-  const consolidatedGantt = [];
-  for (const entry of ganttChart) {
-    const last = consolidatedGantt[consolidatedGantt.length - 1];
-    if (last && last.type === entry.type && last.pid === entry.pid && last.queueLevel === entry.queueLevel) {
-      last.endTime = entry.time + 1;
-      last.duration++;
-    } else {
-      consolidatedGantt.push({
-        ...entry,
-        startTime: entry.time,
-        endTime: entry.time + 1,
-        duration: 1
-      });
-    }
-  }
-
-  // Calculate metrics
-  const completedProcs = procs.filter(p => p.state === ProcessState.TERMINATED);
-  const avgTurnaroundTime = completedProcs.length > 0
-    ? completedProcs.reduce((sum, p) => sum + p.getTurnaroundTime(), 0) / completedProcs.length
-    : 0;
-  const avgWaitingTime = completedProcs.length > 0
-    ? completedProcs.reduce((sum, p) => sum + p.getWaitingTime(), 0) / completedProcs.length
-    : 0;
-  const avgResponseTime = completedProcs.length > 0
-    ? completedProcs.reduce((sum, p) => sum + p.responseTime, 0) / completedProcs.length
-    : 0;
-  const cpuUtilization = currentTime > 0 ? (cpuBusyTime / currentTime) * 100 : 0;
+  // Consolidate Gantt chart and calculate metrics using shared utilities
+  const consolidatedGantt = consolidateGanttChart(ganttChart);
+  const metrics = calculateMetrics(procs, ganttChart, currentTime, cpuBusyTime);
 
   return {
     ganttChart: consolidatedGantt,
     rawGanttChart: ganttChart,
     stateTransitions,
     processes: procs.map(p => p.toJSON()),
-    metrics: {
-      avgTurnaroundTime,
-      avgWaitingTime,
-      avgResponseTime,
-      cpuUtilization,
-      totalTime: currentTime,
-      contextSwitches: ganttChart.filter(e => e.type === 'CONTEXT_SWITCH').length
-    }
+    metrics
   };
 }
 

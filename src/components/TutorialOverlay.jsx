@@ -1,7 +1,7 @@
 // Tutorial Overlay Component
 // Interactive walkthrough for first-time users
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import './TutorialOverlay.css';
 
 const TUTORIAL_STEPS = [
@@ -72,17 +72,28 @@ const TUTORIAL_STEPS = [
 
 const STORAGE_KEY = 'cpu-scheduler-tutorial-completed';
 
-export function TutorialOverlay({ onComplete }) {
+export function TutorialOverlay({ onComplete, show }) {
   const [isVisible, setIsVisible] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [spotlightStyle, setSpotlightStyle] = useState({});
   const [tooltipStyle, setTooltipStyle] = useState({});
+  const prevShowRef = useRef(show);
 
-  // Check if tutorial should show
+  // Handle external show trigger
+  useEffect(() => {
+    if (show && !prevShowRef.current) {
+      setTimeout(() => {
+        setCurrentStep(0);
+        setIsVisible(true);
+      }, 0);
+    }
+    prevShowRef.current = show;
+  }, [show]);
+
+  // Check if tutorial should auto-show on first visit
   useEffect(() => {
     const hasCompleted = localStorage.getItem(STORAGE_KEY);
     if (!hasCompleted) {
-      // Delay to let DOM render
       setTimeout(() => setIsVisible(true), 500);
     }
   }, []);

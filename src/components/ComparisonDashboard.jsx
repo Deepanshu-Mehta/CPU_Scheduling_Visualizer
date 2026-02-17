@@ -4,6 +4,7 @@
 import React from 'react';
 import { useSimulation } from '../context/SimulationContext.jsx';
 import { GanttChart } from '../visualization/GanttChart.jsx';
+import { ComparisonBarChart } from '../visualization/ComparisonBarChart.jsx';
 import './ComparisonDashboard.css';
 
 export function ComparisonDashboard() {
@@ -156,6 +157,9 @@ export function ComparisonDashboard() {
               </table>
             </div>
           </div>
+
+          {/* Bar Charts */}
+          <ComparisonBarChart results={Object.values(state.comparisonResults)} />
 
           {/* Gantt Charts */}
           <div className="gantt-comparison">
