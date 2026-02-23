@@ -1,5 +1,3 @@
-// Main Application Component
-// CPU Scheduling Visualizer
 
 import React, { useState } from 'react';
 import { SimulationProvider, useSimulation } from './context/SimulationContext.jsx';
@@ -15,11 +13,15 @@ import { GanttChartContainer } from './visualization/GanttChart.jsx';
 import { TutorialOverlay } from './components/TutorialOverlay.jsx';
 import { exportToJSON, exportToPDF } from './utils/exportUtils.js';
 import { SimulationState } from './simulation/SimulationController.js';
+import { BrowserRouter, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
+import { Dashboard } from './pages/Dashboard.jsx';
 import './App.css';
 
 function AppContent() {
   const { state, setActiveTab, setComparisonMode } = useSimulation();
   const [showTutorial, setShowTutorial] = useState(false);
+  const navigate = useNavigate();
 
   const handleStartTutorial = () => {
     localStorage.removeItem('cpu-scheduler-tutorial-completed');
@@ -59,13 +61,11 @@ function AppContent() {
 
   return (
     <div className="app">
-      {/* Tutorial Overlay */}
       {showTutorial && <TutorialOverlay onComplete={() => setShowTutorial(false)} />}
       {!showTutorial && <TutorialOverlay onComplete={() => {}} />}
-      {/* Header */}
       <header className="app-header">
         <div className="header-content">
-          <div className="logo">
+          <div className="logo" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
             <span className="logo-icon">⚙️</span>
             <h1>CPU Scheduling Visualizer</h1>
           </div>
@@ -105,18 +105,15 @@ function AppContent() {
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="app-main">
         {state.activeTab === 'simulation' ? (
           <div className="simulation-layout">
-            {/* Left Sidebar - Configuration */}
             <aside className="sidebar">
               <ProcessInputTable />
               <AlgorithmSelector />
               <SimulationControls />
             </aside>
 
-            {/* Main Content - Visualization */}
             <section className="content">
               <GanttChartContainer />
               <QueueVisualization />
@@ -139,7 +136,6 @@ function AppContent() {
         )}
       </main>
 
-      {/* Footer */}
       <footer className="app-footer">
         <p>
           CPU Scheduling Visualizer — Featuring FCFS, SJF, SRTF, Priority, Round Robin, HRRN, and MLFQ algorithms
@@ -149,12 +145,27 @@ function AppContent() {
   );
 }
 
+function AnimatedRoutes() {
+  const location = useLocation();
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/simulation" element={<AppContent />} />
+      </Routes>
+    </AnimatePresence>
+  );
+}
+
 function App() {
   return (
     <SimulationProvider>
-      <AppContent />
+      <BrowserRouter>
+        <AnimatedRoutes />
+      </BrowserRouter>
     </SimulationProvider>
   );
 }
 
 export default App;
+
