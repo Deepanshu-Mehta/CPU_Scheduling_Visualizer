@@ -73,9 +73,17 @@ export function calculateMetrics(processes, rawGanttChart, totalTime, cpuBusyTim
   const contextSwitches = rawGanttChart.filter(tick => tick.type === 'CONTEXT_SWITCH').length;
 
   processes.forEach(p => {
-    totalTurnaroundTime += p.turnaroundTime > 0 ? p.turnaroundTime : 0;
-    totalWaitingTime += p.calculatedWaitTime > 0 ? p.calculatedWaitTime : 0;
-    totalResponseTime += p.responseTime > -1 ? p.responseTime : 0;
+    const tat = typeof p.getTurnaroundTime === 'function'
+      ? p.getTurnaroundTime()
+      : (p.turnaroundTime ?? 0);
+    const wt = typeof p.getWaitingTime === 'function'
+      ? p.getWaitingTime()
+      : (p.calculatedWaitTime ?? 0);
+    const rt = p.responseTime ?? 0;
+
+    totalTurnaroundTime += tat > 0 ? tat : 0;
+    totalWaitingTime += wt > 0 ? wt : 0;
+    totalResponseTime += rt > -1 ? rt : 0;
   });
 
   return {

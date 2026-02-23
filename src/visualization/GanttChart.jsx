@@ -125,7 +125,7 @@ export function GanttChart({ data, processes }) {
       .attr('class', 'bar-rect')
       .attr('x', d => xScale(d.startTime))
       .attr('y', 0)
-      .attr('width', d => Math.max(2, xScale(d.duration) - 1))
+      .attr('width', d => Math.max(2, xScale(d.endTime) - xScale(d.startTime) - 1))
       .attr('height', innerHeight)
       .attr('rx', 4)
       .attr('fill', d => {
@@ -185,7 +185,7 @@ export function GanttChart({ data, processes }) {
     // Add process label inside bar
     barsEnter.append('text')
       .attr('class', 'bar-label')
-      .attr('x', d => xScale(d.startTime) + Math.max(2, xScale(d.duration) - 1) / 2)
+      .attr('x', d => xScale(d.startTime) + Math.max(2, xScale(d.endTime) - xScale(d.startTime) - 1) / 2)
       .attr('y', innerHeight / 2)
       .attr('dy', '0.35em')
       .attr('text-anchor', 'middle')
@@ -193,7 +193,7 @@ export function GanttChart({ data, processes }) {
       .attr('font-size', '11px')
       .attr('font-weight', '600')
       .text(d => {
-        const barWidth = xScale(d.duration);
+        const barWidth = xScale(d.endTime) - xScale(d.startTime);
         if (d.type === 'PROCESS' && barWidth >= 20) return `P${d.pid}`;
         if (d.type === 'CONTEXT_SWITCH' && barWidth >= 20) return 'CS';
         return '';
@@ -206,7 +206,7 @@ export function GanttChart({ data, processes }) {
       .transition()
       .duration(200)
       .attr('x', d => xScale(d.startTime))
-      .attr('width', d => Math.max(2, xScale(d.duration) - 1));
+      .attr('width', d => Math.max(2, xScale(d.endTime) - xScale(d.startTime) - 1));
 
     // Exit
     bars.exit()
