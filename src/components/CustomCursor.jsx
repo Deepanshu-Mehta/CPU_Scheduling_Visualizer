@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from 'react';
+// eslint-disable-next-line no-unused-vars
 import { motion, useSpring } from 'framer-motion';
 
 export function CustomCursor() {
   const [clicked, setClicked] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const isTouch = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
 
-  // Smooth springs for cursor position
+  // Smooth springs for cursor position — must be called unconditionally
   const cursorX = useSpring(-100, { stiffness: 400, damping: 28 });
   const cursorY = useSpring(-100, { stiffness: 400, damping: 28 });
 
+  // Dot follows faster — these must also be called unconditionally (Rules of Hooks)
+  const dotX = useSpring(cursorX, { stiffness: 1000, damping: 40 });
+  const dotY = useSpring(cursorY, { stiffness: 1000, damping: 40 });
+
   useEffect(() => {
-    // Determine if device has touch capability, if so, we probably don't want a custom cursor
-    if (window.matchMedia('(pointer: coarse)').matches) {
+    // Don't set up listeners on touch devices
+    if (isTouch) {
       return;
     }
 
@@ -54,10 +60,10 @@ export function CustomCursor() {
       window.removeEventListener('mouseup', mouseUp);
       document.body.style.cursor = 'auto'; // Restore on unmount
     };
-  }, [cursorX, cursorY]);
+  }, [cursorX, cursorY, isTouch]);
 
   // Don't render on touch devices
-  if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) {
+  if (isTouch) {
     return null;
   }
 
@@ -95,8 +101,8 @@ export function CustomCursor() {
       <motion.div
         className="custom-cursor-dot"
         style={{
-          x: useSpring(cursorX, { stiffness: 1000, damping: 40 }), // Dot follows faster
-          y: useSpring(cursorY, { stiffness: 1000, damping: 40 }),
+          x: dotX,
+          y: dotY,
         }}
         animate={{
           opacity: hovered ? 0 : 1, // Hide dot when hovering to show just the ring
