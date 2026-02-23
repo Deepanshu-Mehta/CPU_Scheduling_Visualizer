@@ -1,0 +1,608 @@
+/* Dashboard.css - Award-Winning "Liquid Kernel" Aesthetic */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+/* Basic UI Overrides */
+body {
+  /* Let custom cursor handle the pointer */
+  cursor: none; 
+}
+
+a, button {
+  cursor: none;
+}
+
+.dashboard-container {
+  min-height: 100vh;
+  width: 100%;
+  color: #ffffff;
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow-x: hidden;
+  position: relative;
+  background-color: transparent; 
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, p {
+  margin: 0;
+  line-height: 1.1;
+}
+
+::selection {
+  background: #ffffff;
+  color: #050505;
+}
+
+/* === Custom Cursor Styles === */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.custom-cursor-dot {
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  width: 4px;
+  height: 4px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* === Sticky Navigation === */
+.sticky-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(5, 5, 5, 0.6);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 5vw;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #ffffff;
+}
+
+.nav-logo span {
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.nav-cta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.4rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #050505;
+  background: #ffffff;
+  border: none;
+  border-radius: 3rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: inherit;
+}
+
+.nav-cta:hover {
+  background: #a5b4fc;
+  transform: scale(1.02);
+}
+
+/* === Hero Section === */
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 4rem 8vw;
+  z-index: 10;
+  pointer-events: none; /* Allows 3D interaction behind */
+}
+
+/* This creates the text effect above the Liquid orb */
+.hero-content {
+  text-align: center;
+  color: #ffffff;
+  z-index: 10;
+}
+
+.hero-title {
+  font-size: clamp(4rem, 15vw, 12rem);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  line-height: 0.85;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #ffffff 40%, #a5b4fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-subtle {
+  font-weight: 300;
+  color: #cccccc;
+}
+
+.hero-spacer {
+  height: 15vh;
+}
+
+/* === Scroll Indicator === */
+.scroll-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 4rem;
+  color: rgba(255, 255, 255, 0.35);
+  pointer-events: none;
+}
+
+.scroll-indicator span {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 400;
+}
+
+/* === Stats Row === */
+.stats-section {
+  background: #050505;
+  padding: 4rem 5vw;
+  position: relative;
+  z-index: 10;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.stats-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.stat-item svg {
+  color: #a5b4fc;
+  flex-shrink: 0;
+}
+
+.stat-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.5);
+  white-space: nowrap;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+}
+
+/* === Explore Section (Cinematic Accordion) === */
+.explanations-section {
+  padding: 5rem 5vw 6rem 5vw;
+  background: #050505;
+  position: relative;
+  z-index: 10;
+}
+
+.section-header {
+  margin-bottom: 5rem;
+}
+
+.section-header h2 {
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.5rem;
+}
+
+.accordion-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.accordion-item {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  position: relative;
+}
+
+.accordion-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3rem 0;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  text-align: left;
+  outline: none;
+  position: relative;
+  z-index: 2;
+  font-family: inherit;
+}
+
+.accordion-title-group {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.algo-short {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #666;
+  width: 90px;
+  flex-shrink: 0;
+}
+
+.algo-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a5b4fc;
+  opacity: 0.6;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  flex-shrink: 0;
+}
+
+.accordion-item:hover .algo-icon,
+.accordion-item.expanded .algo-icon {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+.accordion-title-group h3 {
+  font-size: clamp(1.5rem, 3vw, 3rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.accordion-icon {
+  color: #666;
+  transition: color 0.5s ease;
+}
+
+/* Hover effects for the accordion rows */
+.accordion-item:hover .accordion-title-group h3 {
+  transform: translateX(20px);
+}
+.accordion-item:hover .accordion-icon {
+  color: #ffffff;
+}
+.accordion-item::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1;
+}
+.accordion-item:hover::before {
+  transform: scaleY(1);
+  transform-origin: top;
+}
+
+/* Expanded Content */
+.accordion-content {
+  padding: 0 0 3rem 100px;
+  max-width: 900px;
+}
+
+.accordion-content p {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: #aaaaaa;
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+}
+
+.accordion-content-footer {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.best-for {
+  display: inline-block;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+}
+
+.simulate-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.2rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #050505;
+  background: #a5b4fc;
+  border: none;
+  border-radius: 2rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: inherit;
+  position: relative;
+  z-index: 5;
+}
+
+.simulate-link:hover {
+  background: #ffffff;
+  transform: translateX(4px);
+}
+
+/* === Magnetic CTA Button === */
+.magnetic-btn-wrapper {
+  display: inline-block;
+  pointer-events: auto; /* Re-enable pointer events inside the exclusion zone */
+}
+
+.launch-btn {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem 3rem;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #050505;
+  background: #ffffff;
+  border: none;
+  border-radius: 4rem;
+  position: relative;
+  overflow: hidden;
+  font-family: inherit;
+  mix-blend-mode: normal;
+}
+
+.launch-btn::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #a5b4fc;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 0;
+  border-radius: 50% 50% 0 0;
+}
+
+.launch-btn:hover::before {
+  transform: translateY(-100%);
+  border-radius: 0;
+}
+
+.launch-btn span, .launch-btn svg {
+  position: relative;
+  z-index: 1;
+}
+
+/* === Footer CTA === */
+.cta-section {
+  padding: 8rem 5vw;
+  background: #000000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border-top: 1px solid #111111;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle grid background for CTA section */
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+.cta-title {
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.cta-subtitle {
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.45);
+  max-width: 500px;
+  line-height: 1.6;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.cta-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 3rem;
+  position: relative;
+}
+
+.cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.4);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  transition: color 0.3s ease;
+  padding: 0.5rem 0;
+}
+
+.cta-link:hover {
+  color: #a5b4fc;
+}
+
+/* === Mobile Adjustments === */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: clamp(2.5rem, 12vw, 5rem);
+  }
+
+  .hero-spacer {
+    height: 10vh;
+  }
+
+  .accordion-content {
+    padding: 0 0 2rem 0;
+  }
+
+  .accordion-header {
+    padding: 2rem 0;
+    min-height: 64px; /* Touch-friendly tap target */
+  }
+
+  .algo-short {
+    display: none;
+  }
+
+  .algo-icon {
+    display: none;
+  }
+
+  .accordion-title-group {
+    gap: 0.75rem;
+  }
+
+  .stats-row {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .stat-divider {
+    width: 40px;
+    height: 1px;
+  }
+
+  .launch-btn {
+    padding: 1.2rem 2.5rem;
+    font-size: 0.9rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .magnetic-btn-wrapper {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .cta-section {
+    padding: 5rem 5vw;
+  }
+
+  .cta-title {
+    font-size: clamp(2rem, 8vw, 3.5rem);
+  }
+
+  .accordion-content-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-inner {
+    padding: 0.8rem 4vw;
+  }
+
+  .scroll-indicator {
+    margin-top: 3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    padding: 4rem 5vw;
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 10vw, 3.5rem);
+  }
+
+  .section-header {
+    margin-bottom: 3rem;
+  }
+
+  .accordion-title-group h3 {
+    font-size: 1.25rem;
+  }
+
+  .stats-section {
+    padding: 3rem 5vw;
+  }
+}
