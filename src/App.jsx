@@ -1,5 +1,3 @@
-// Main Application Component
-// CPU Scheduling Visualizer
 
 import React, { useState } from 'react';
 import { SimulationProvider, useSimulation } from './context/SimulationContext.jsx';
@@ -63,10 +61,8 @@ function AppContent() {
 
   return (
     <div className="app">
-      {/* Tutorial Overlay */}
       {showTutorial && <TutorialOverlay onComplete={() => setShowTutorial(false)} />}
       {!showTutorial && <TutorialOverlay onComplete={() => {}} />}
-      {/* Header */}
       <header className="app-header">
         <div className="header-content">
           <div className="logo" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
@@ -109,18 +105,15 @@ function AppContent() {
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="app-main">
         {state.activeTab === 'simulation' ? (
           <div className="simulation-layout">
-            {/* Left Sidebar - Configuration */}
             <aside className="sidebar">
               <ProcessInputTable />
               <AlgorithmSelector />
               <SimulationControls />
             </aside>
 
-            {/* Main Content - Visualization */}
             <section className="content">
               <GanttChartContainer />
               <QueueVisualization />
@@ -143,7 +136,6 @@ function AppContent() {
         )}
       </main>
 
-      {/* Footer */}
       <footer className="app-footer">
         <p>
           CPU Scheduling Visualizer — Featuring FCFS, SJF, SRTF, Priority, Round Robin, HRRN, and MLFQ algorithms

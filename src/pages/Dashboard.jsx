@@ -81,7 +81,6 @@ const algorithms = [
   }
 ];
 
-// Magnetic Button Component
 function MagneticButton({ children, onClick, className }) {
   const ref = useRef(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -119,7 +118,6 @@ export function Dashboard() {
   const [expandedId, setExpandedId] = useState(null);
   const [showNav, setShowNav] = useState(false);
 
-  // Show/hide sticky nav on scroll
   useEffect(() => {
     const handleScroll = () => {
       setShowNav(window.scrollY > 200);
@@ -128,7 +126,6 @@ export function Dashboard() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Cinematic reveal animation for text
   const titleVariants = {
     hidden: { y: 100, opacity: 0 },
     visible: { 
@@ -138,7 +135,6 @@ export function Dashboard() {
     }
   };
 
-  // Page transition
   const pageVariants = {
     initial: { opacity: 1 },
     exit: { opacity: 0, y: -30, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } }
@@ -158,7 +154,6 @@ export function Dashboard() {
       <CustomCursor />
       <ThreeBackground />
 
-      {/* Sticky Navigation */}
       <motion.nav 
         className={`sticky-nav ${showNav ? 'visible' : ''}`}
         initial={{ y: -80 }}
@@ -177,7 +172,6 @@ export function Dashboard() {
         </div>
       </motion.nav>
       
-      {/* Hero Section */}
       <section className="hero-section">
         <div className="hero-content">
           <motion.div 
@@ -212,7 +206,6 @@ export function Dashboard() {
             </MagneticButton>
           </motion.div>
 
-          {/* Scroll Down Indicator */}
           <motion.div 
             className="scroll-indicator"
             initial={{ opacity: 0 }}
@@ -230,7 +223,6 @@ export function Dashboard() {
         </div>
       </section>
 
-      {/* Quick Stats Row */}
       <section className="stats-section">
         <motion.div 
           className="stats-row"
@@ -259,7 +251,6 @@ export function Dashboard() {
         </motion.div>
       </section>
 
-      {/* Cinematic Accordion Section */}
       <section className="explanations-section">
         <div className="section-header">
           <motion.h2
@@ -301,7 +292,6 @@ export function Dashboard() {
                   </motion.div>
                 </button>
                 
-                {/* Accordion Content Reveal */}
                 <AnimatePresence>
                   {isExpanded && (
                     <motion.div
@@ -336,7 +326,6 @@ export function Dashboard() {
         </div>
       </section>
 
-      {/* Footer CTA */}
       <section className="cta-section">
         <motion.h2 
           className="cta-title"

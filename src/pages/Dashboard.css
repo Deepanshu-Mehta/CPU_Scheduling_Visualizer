@@ -1,9 +1,6 @@
-/* Dashboard.css - Award-Winning "Liquid Kernel" Aesthetic */
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
-/* Basic UI Overrides */
 body {
-  /* Let custom cursor handle the pointer */
   cursor: none; 
 }
 
@@ -33,7 +30,6 @@ h1, h2, h3, h4, p {
   color: #050505;
 }
 
-/* === Custom Cursor Styles === */
 .custom-cursor {
   position: fixed;
   top: 0;
@@ -57,7 +53,6 @@ h1, h2, h3, h4, p {
   z-index: 9999;
 }
 
-/* === Sticky Navigation === */
 .sticky-nav {
   position: fixed;
   top: 0;
@@ -114,7 +109,6 @@ h1, h2, h3, h4, p {
   transform: scale(1.02);
 }
 
-/* === Hero Section === */
 .hero-section {
   min-height: 100vh;
   display: flex;
@@ -123,10 +117,9 @@ h1, h2, h3, h4, p {
   position: relative;
   padding: 4rem 8vw;
   z-index: 10;
-  pointer-events: none; /* Allows 3D interaction behind */
+  pointer-events: none;
 }
 
-/* This creates the text effect above the Liquid orb */
 .hero-content {
   text-align: center;
   color: #ffffff;
@@ -154,7 +147,6 @@ h1, h2, h3, h4, p {
   height: 15vh;
 }
 
-/* === Scroll Indicator === */
 .scroll-indicator {
   display: flex;
   flex-direction: column;
@@ -172,7 +164,6 @@ h1, h2, h3, h4, p {
   font-weight: 400;
 }
 
-/* === Stats Row === */
 .stats-section {
   background: #050505;
   padding: 4rem 5vw;
@@ -223,7 +214,6 @@ h1, h2, h3, h4, p {
   flex-shrink: 0;
 }
 
-/* === Explore Section (Cinematic Accordion) === */
 .explanations-section {
   padding: 5rem 5vw 6rem 5vw;
   background: #050505;
@@ -313,13 +303,14 @@ h1, h2, h3, h4, p {
   transition: color 0.5s ease;
 }
 
-/* Hover effects for the accordion rows */
 .accordion-item:hover .accordion-title-group h3 {
   transform: translateX(20px);
 }
+
 .accordion-item:hover .accordion-icon {
   color: #ffffff;
 }
+
 .accordion-item::before {
   content: '';
   position: absolute;
@@ -330,12 +321,12 @@ h1, h2, h3, h4, p {
   transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 1;
 }
+
 .accordion-item:hover::before {
   transform: scaleY(1);
   transform-origin: top;
 }
 
-/* Expanded Content */
 .accordion-content {
   padding: 0 0 3rem 100px;
   max-width: 900px;
@@ -391,10 +382,9 @@ h1, h2, h3, h4, p {
   transform: translateX(4px);
 }
 
-/* === Magnetic CTA Button === */
 .magnetic-btn-wrapper {
   display: inline-block;
-  pointer-events: auto; /* Re-enable pointer events inside the exclusion zone */
+  pointer-events: auto;
 }
 
 .launch-btn {
@@ -439,7 +429,6 @@ h1, h2, h3, h4, p {
   z-index: 1;
 }
 
-/* === Footer CTA === */
 .cta-section {
   padding: 8rem 5vw;
   background: #000000;
@@ -452,7 +441,6 @@ h1, h2, h3, h4, p {
   overflow: hidden;
 }
 
-/* Subtle grid background for CTA section */
 .cta-section::before {
   content: '';
   position: absolute;
@@ -510,7 +498,6 @@ h1, h2, h3, h4, p {
   color: #a5b4fc;
 }
 
-/* === Mobile Adjustments === */
 @media (max-width: 768px) {
   .hero-title {
     font-size: clamp(2.5rem, 12vw, 5rem);
@@ -526,7 +513,7 @@ h1, h2, h3, h4, p {
 
   .accordion-header {
     padding: 2rem 0;
-    min-height: 64px; /* Touch-friendly tap target */
+    min-height: 64px;
   }
 
   .algo-short {
