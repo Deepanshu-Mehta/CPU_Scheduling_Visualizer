@@ -62,15 +62,28 @@ export function calculateMetrics(processes, rawGanttChart, totalTime, cpuBusyTim
       avgResponseTime: 0,
       cpuUtilization: 0,
       totalTime: totalTime,
-      contextSwitches: 0
+      contextSwitches: 0,
+      throughput: 0,
+      avgCompletionTime: 0,
+      idleTime: 0,
+      maxWaitingTime: 0,
+      maxResponseTime: 0,
+      schedulingLength: 0,
+      perProcess: []
     };
   }
 
   let totalTurnaroundTime = 0;
   let totalWaitingTime = 0;
   let totalResponseTime = 0;
+  let totalCompletionTime = 0;
+  let maxWaitingTime = 0;
+  let maxResponseTime = 0;
+  let minArrivalTime = Infinity;
   
   const contextSwitches = rawGanttChart.filter(tick => tick.type === 'CONTEXT_SWITCH').length;
+
+  const perProcess = [];
 
   processes.forEach(p => {
     const tat = typeof p.getTurnaroundTime === 'function'
@@ -80,18 +93,51 @@ export function calculateMetrics(processes, rawGanttChart, totalTime, cpuBusyTim
       ? p.getWaitingTime()
       : (p.calculatedWaitTime ?? 0);
     const rt = p.responseTime ?? 0;
+    const ct = p.completionTime ?? 0;
+    const at = p.arrivalTime ?? 0;
+    const burst = p.totalCpuBurstTime ?? (p.cpuBurst ?? 0);
 
-    totalTurnaroundTime += tat > 0 ? tat : 0;
-    totalWaitingTime += wt > 0 ? wt : 0;
-    totalResponseTime += rt > -1 ? rt : 0;
+    const safeTat = tat > 0 ? tat : 0;
+    const safeWt = wt > 0 ? wt : 0;
+    const safeRt = rt > -1 ? rt : 0;
+
+    totalTurnaroundTime += safeTat;
+    totalWaitingTime += safeWt;
+    totalResponseTime += safeRt;
+    totalCompletionTime += ct > 0 ? ct : 0;
+
+    if (safeWt > maxWaitingTime) maxWaitingTime = safeWt;
+    if (safeRt > maxResponseTime) maxResponseTime = safeRt;
+    if (at < minArrivalTime) minArrivalTime = at;
+
+    perProcess.push({
+      pid: p.pid,
+      arrivalTime: at,
+      burstTime: burst,
+      completionTime: ct > 0 ? ct : 0,
+      turnaroundTime: safeTat,
+      waitingTime: safeWt,
+      responseTime: safeRt
+    });
   });
 
+  const n = processes.length;
+  const idleTime = totalTime - cpuBusyTime;
+  const schedulingLength = totalTime - (minArrivalTime !== Infinity ? minArrivalTime : 0);
+
   return {
-    avgTurnaroundTime: totalTurnaroundTime / processes.length,
-    avgWaitingTime: totalWaitingTime / processes.length,
-    avgResponseTime: totalResponseTime / processes.length,
+    avgTurnaroundTime: totalTurnaroundTime / n,
+    avgWaitingTime: totalWaitingTime / n,
+    avgResponseTime: totalResponseTime / n,
     cpuUtilization: totalTime > 0 ? (cpuBusyTime / totalTime) * 100 : 0,
     totalTime,
-    contextSwitches
+    contextSwitches,
+    throughput: totalTime > 0 ? n / totalTime : 0,
+    avgCompletionTime: totalCompletionTime / n,
+    idleTime: idleTime > 0 ? idleTime : 0,
+    maxWaitingTime,
+    maxResponseTime,
+    schedulingLength: schedulingLength > 0 ? schedulingLength : totalTime,
+    perProcess
   };
 }

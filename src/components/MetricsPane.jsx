@@ -1,13 +1,14 @@
 // Metrics Pane Component
-// Displays AWT, ATAT, CPU Utilization, and other metrics
+// Displays AWT, ATAT, CPU Utilization, Throughput, and other metrics
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useSimulation } from '../context/SimulationContext.jsx';
 import { SimulationState } from '../simulation/SimulationController.js';
 import './MetricsPane.css';
 
 export function MetricsPane() {
   const { state } = useSimulation();
+  const [showPerProcess, setShowPerProcess] = useState(false);
 
   const metrics = state.metrics || {};
   const isCompleted = state.simulationState === SimulationState.COMPLETED;
@@ -50,6 +51,22 @@ export function MetricsPane() {
       color: 'success',
       description: 'Percentage of time CPU was busy',
     },
+    {
+      label: 'Throughput',
+      value: formatNumber(metrics.throughput, 3),
+      unit: 'p/unit',
+      icon: '🔄',
+      color: 'info',
+      description: 'Processes completed per time unit',
+    },
+    {
+      label: 'Avg Completion Time',
+      value: formatNumber(metrics.avgCompletionTime),
+      unit: 'units',
+      icon: '🏁',
+      color: 'danger',
+      description: 'Average absolute completion time',
+    },
   ];
 
   const additionalMetrics = [
@@ -60,7 +77,7 @@ export function MetricsPane() {
     },
     {
       label: 'Context Switches',
-      value: metrics.contextSwitches || 0,
+      value: metrics.contextSwitches ?? 0,
       unit: '',
     },
     {
@@ -68,7 +85,34 @@ export function MetricsPane() {
       value: state.processInputs?.length || 0,
       unit: '',
     },
+    {
+      label: 'Idle Time',
+      value: metrics.idleTime ?? '—',
+      unit: metrics.idleTime !== undefined ? 'units' : '',
+    },
+    {
+      label: 'Max Wait',
+      value: formatNumber(metrics.maxWaitingTime),
+      unit: 'units',
+    },
+    {
+      label: 'Max Response',
+      value: formatNumber(metrics.maxResponseTime),
+      unit: 'units',
+    },
+    {
+      label: 'Schedule Length',
+      value: metrics.schedulingLength ?? '—',
+      unit: metrics.schedulingLength !== undefined ? 'units' : '',
+    },
   ];
+
+  const perProcess = metrics.perProcess || [];
+
+  // For bar chart visualization
+  const maxTat = perProcess.length > 0
+    ? Math.max(...perProcess.map(p => p.turnaroundTime), 1)
+    : 1;
 
   return (
     <div className="metrics-pane">
@@ -107,6 +151,67 @@ export function MetricsPane() {
         </div>
       )}
 
+      {/* Per-process breakdown */}
+      {isCompleted && perProcess.length > 0 && (
+        <div className="per-process-section">
+          <button
+            className="per-process-toggle"
+            onClick={() => setShowPerProcess(!showPerProcess)}
+          >
+            <span className="toggle-icon">{showPerProcess ? '▾' : '▸'}</span>
+            Per-Process Breakdown
+          </button>
+          {showPerProcess && (
+            <div className="per-process-content">
+              <div className="per-process-table-wrapper">
+                <table className="per-process-table">
+                  <thead>
+                    <tr>
+                      <th>PID</th>
+                      <th>Arrival</th>
+                      <th>Burst</th>
+                      <th>Completion</th>
+                      <th>TAT</th>
+                      <th>Waiting</th>
+                      <th>Response</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {perProcess.map((p, i) => (
+                      <tr key={i}>
+                        <td className="pid-cell">P{p.pid}</td>
+                        <td>{p.arrivalTime}</td>
+                        <td>{p.burstTime}</td>
+                        <td>{p.completionTime}</td>
+                        <td>{formatNumber(p.turnaroundTime)}</td>
+                        <td>{formatNumber(p.waitingTime)}</td>
+                        <td>{formatNumber(p.responseTime)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="per-process-bars">
+                <div className="bars-header">Turnaround Time Comparison</div>
+                {perProcess.map((p, i) => (
+                  <div key={i} className="bar-row">
+                    <span className="bar-label">P{p.pid}</span>
+                    <div className="bar-track">
+                      <div
+                        className="bar-fill"
+                        style={{ width: `${(p.turnaroundTime / maxTat) * 100}%` }}
+                      >
+                        <span className="bar-value">{formatNumber(p.turnaroundTime)}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Formulas reference */}
       <div className="formulas-section">
         <details>
@@ -116,6 +221,10 @@ export function MetricsPane() {
             <p><strong>Waiting Time</strong> = Turnaround Time − Total CPU Burst</p>
             <p><strong>Response Time</strong> = First CPU Access − Arrival Time</p>
             <p><strong>CPU Utilization</strong> = (CPU Busy Time / Total Time) × 100%</p>
+            <p><strong>Throughput</strong> = Total Processes / Total Time</p>
+            <p><strong>Avg Completion</strong> = Σ Completion Time / n</p>
+            <p><strong>Idle Time</strong> = Total Time − CPU Busy Time</p>
+            <p><strong>Schedule Length</strong> = Total Time − min(Arrival Time)</p>
           </div>
         </details>
       </div>

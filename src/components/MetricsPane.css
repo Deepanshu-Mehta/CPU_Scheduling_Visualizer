@@ -33,15 +33,15 @@
 
 .metrics-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
   margin-bottom: 20px;
 }
 
 .metric-card {
   display: flex;
-  gap: 14px;
-  padding: 18px;
+  gap: 12px;
+  padding: 16px;
   border-radius: 14px;
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
@@ -89,14 +89,32 @@
   background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
 }
 
+.metric-card.info {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(14, 116, 144, 0.1) 100%);
+  border-color: rgba(6, 182, 212, 0.2);
+}
+
+.metric-card.info .metric-icon {
+  background: linear-gradient(135deg, #06b6d4 0%, #0e7490 100%);
+}
+
+.metric-card.danger {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(185, 28, 28, 0.1) 100%);
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+.metric-card.danger .metric-icon {
+  background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+}
+
 .metric-icon {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 12px;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   flex-shrink: 0;
 }
 
@@ -104,10 +122,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-width: 0;
 }
 
 .metric-value {
-  font-size: 1.5rem;
+  font-size: 1.35rem;
   font-weight: 700;
   color: var(--text-primary);
   font-family: 'JetBrains Mono', monospace;
@@ -115,22 +134,27 @@
 }
 
 .metric-unit {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   font-weight: 500;
   color: var(--text-secondary);
-  margin-left: 4px;
+  margin-left: 3px;
 }
 
 .metric-label {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--text-secondary);
-  margin-top: 4px;
+  margin-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
+/* Additional metrics strip */
 .additional-metrics {
   display: flex;
-  gap: 20px;
-  padding: 16px;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  padding: 14px 16px;
   background: var(--bg-secondary);
   border-radius: 12px;
   margin-bottom: 16px;
@@ -139,7 +163,7 @@
 .additional-metric {
   display: flex;
   gap: 6px;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 .additional-label {
@@ -152,6 +176,150 @@
   font-family: 'JetBrains Mono', monospace;
 }
 
+/* Per-process breakdown */
+.per-process-section {
+  margin-bottom: 16px;
+}
+
+.per-process-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 10px 0;
+  width: 100%;
+  text-align: left;
+  transition: color 0.2s;
+}
+
+.per-process-toggle:hover {
+  color: var(--primary);
+}
+
+.toggle-icon {
+  font-size: 0.8rem;
+  transition: transform 0.2s;
+}
+
+.per-process-content {
+  animation: slideDown 0.25s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.per-process-table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 16px;
+}
+
+.per-process-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.per-process-table th {
+  padding: 8px 10px;
+  text-align: left;
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border-color);
+  white-space: nowrap;
+}
+
+.per-process-table td {
+  padding: 7px 10px;
+  color: var(--text-primary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.per-process-table tbody tr:hover {
+  background: rgba(99, 102, 241, 0.06);
+}
+
+.pid-cell {
+  font-weight: 600;
+  color: var(--primary) !important;
+}
+
+/* Bar visualization */
+.per-process-bars {
+  padding: 12px 0;
+}
+
+.bars-header {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.bar-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--primary);
+  width: 32px;
+  flex-shrink: 0;
+}
+
+.bar-track {
+  flex: 1;
+  height: 24px;
+  background: var(--bg-secondary);
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.bar-fill {
+  height: 100%;
+  min-width: 28px;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 8px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bar-value {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Formulas section */
 .formulas-section {
   border-top: 1px solid var(--border-color);
   padding-top: 16px;
@@ -189,6 +357,12 @@
 
 .formulas-content strong {
   color: var(--text-primary);
+}
+
+@media (max-width: 1200px) {
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 768px) {
