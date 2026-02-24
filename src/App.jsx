@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Cpu } from "lucide-react";
 import {
   SimulationProvider,
   useSimulation,
@@ -92,7 +93,7 @@ function AppContent() {
             onClick={() => navigate("/")}
             style={{ cursor: "pointer" }}
           >
-            <span className="logo-icon">⚙️</span>
+            <span className="logo-icon"><Cpu size={20} strokeWidth={1.5} /></span>
             <h1>CPU Scheduling Visualizer</h1>
           </div>
           <nav className="header-nav">
