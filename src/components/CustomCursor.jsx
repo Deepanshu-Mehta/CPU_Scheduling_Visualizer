@@ -44,14 +44,12 @@ export function CustomCursor() {
     window.addEventListener('mousemove', checkHover);
     window.addEventListener('mousedown', mouseDown);
     window.addEventListener('mouseup', mouseUp);
-    document.body.style.cursor = 'none';
 
     return () => {
       window.removeEventListener('mousemove', mouseMove);
       window.removeEventListener('mousemove', checkHover);
       window.removeEventListener('mousedown', mouseDown);
       window.removeEventListener('mouseup', mouseUp);
-      document.body.style.cursor = 'auto';
     };
   }, [cursorX, cursorY, isTouch]);
 
