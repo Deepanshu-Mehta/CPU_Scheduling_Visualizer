@@ -1,10 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
 
-body {
-  cursor: none; 
-}
-
-a, button {
+.dashboard-container,
+.dashboard-container * {
   cursor: none;
 }
 
@@ -12,15 +9,23 @@ a, button {
   min-height: 100vh;
   width: 100%;
   color: #ffffff;
-  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family:
+    "Space Grotesk",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
   overflow-x: hidden;
   position: relative;
-  background-color: transparent; 
+  background-color: transparent;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, p {
+h1,
+h2,
+h3,
+h4,
+p {
   margin: 0;
   line-height: 1.1;
 }
@@ -281,7 +286,9 @@ h1, h2, h3, h4, p {
   justify-content: center;
   color: #a5b4fc;
   opacity: 0.6;
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
   flex-shrink: 0;
 }
 
@@ -312,9 +319,12 @@ h1, h2, h3, h4, p {
 }
 
 .accordion-item::before {
-  content: '';
+  content: "";
   position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background: rgba(255, 255, 255, 0.03);
   transform: scaleY(0);
   transform-origin: bottom;
@@ -353,7 +363,7 @@ h1, h2, h3, h4, p {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: #ffffff;
-  border: 1px solid rgba(255,255,255,0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 0.5rem 1rem;
   border-radius: 2rem;
 }
@@ -407,7 +417,7 @@ h1, h2, h3, h4, p {
 }
 
 .launch-btn::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 100%;
   left: 0;
@@ -424,7 +434,8 @@ h1, h2, h3, h4, p {
   border-radius: 0;
 }
 
-.launch-btn span, .launch-btn svg {
+.launch-btn span,
+.launch-btn svg {
   position: relative;
   z-index: 1;
 }
@@ -442,15 +453,15 @@ h1, h2, h3, h4, p {
 }
 
 .cta-section::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: 
-    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
   background-size: 60px 60px;
   pointer-events: none;
 }
