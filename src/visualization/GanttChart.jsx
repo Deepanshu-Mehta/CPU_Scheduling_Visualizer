@@ -144,7 +144,7 @@ export function GanttChart({ data, processes }) {
         
         let content = '';
         if (d.type === 'PROCESS') {
-          content = `<strong>P${d.pid}</strong><br/>Time: ${d.startTime} - ${d.endTime}<br/>Duration: ${d.duration}`;
+          content = `<strong>P${d.pid}</strong><br/>Time: ${d.startTime} - ${d.endTime}<br/>Duration: ${d.endTime - d.startTime}`;
           if (d.queueLevel !== undefined) {
             content += `<br/>Queue: ${d.queueLevel + 1}`;
           }
