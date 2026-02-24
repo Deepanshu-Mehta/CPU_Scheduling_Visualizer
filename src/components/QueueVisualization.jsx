@@ -15,7 +15,7 @@ const PROCESS_COLORS = [
 
 export function QueueVisualization() {
   const { state } = useSimulation();
-  
+
   const isActive = state.simulationState !== SimulationState.IDLE;
   
   // Build current queue state from process states
@@ -61,6 +61,9 @@ export function QueueVisualization() {
     
     return { readyQueue: ready, runningProcess: running, waitingQueue: waiting, contextSwitching: cs };
   }, [state.processStates, state.processInputs, state.ganttChart]);
+
+  // Hide when MLFQ is selected — MLFQVisualization handles multi-queue display
+  if (state.selectedAlgorithm === 'MLFQ') return null;
 
   if (!isActive) {
     return (

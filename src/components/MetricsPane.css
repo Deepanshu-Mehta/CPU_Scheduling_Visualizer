@@ -3,7 +3,7 @@
 .metrics-pane {
   background: var(--card-bg);
   border-radius: 16px;
-  padding: 24px;
+  padding: 16px;
   box-shadow: var(--shadow-md);
   border: 1px solid var(--border-color);
 }
@@ -12,12 +12,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
 .metrics-header h3 {
   margin: 0;
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   color: var(--text-primary);
 }
 
@@ -34,14 +34,14 @@
 .metrics-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  margin-bottom: 20px;
+  gap: 10px;
+  margin-bottom: 14px;
 }
 
 .metric-card {
   display: flex;
-  gap: 12px;
-  padding: 16px;
+  gap: 10px;
+  padding: 12px;
   border-radius: 14px;
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
@@ -108,8 +108,8 @@
 }
 
 .metric-icon {
-  width: 44px;
-  height: 44px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -126,7 +126,7 @@
 }
 
 .metric-value {
-  font-size: 1.35rem;
+  font-size: 1.15rem;
   font-weight: 700;
   color: var(--text-primary);
   font-family: 'JetBrains Mono', monospace;

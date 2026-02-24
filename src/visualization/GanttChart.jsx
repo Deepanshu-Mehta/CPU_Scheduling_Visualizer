@@ -138,9 +138,8 @@ export function GanttChart({ data, processes }) {
         return 'rgba(255,255,255,0.1)';
       })
       .attr('stroke-width', 1)
-      .style('opacity', 0)
+      .style('opacity', 1)
       .on('mouseenter', function(event, d) {
-        d3.select(this).style('opacity', 1);
         
         let content = '';
         if (d.type === 'PROCESS') {
@@ -175,12 +174,8 @@ export function GanttChart({ data, processes }) {
           .style('top', `${y + 20}px`);
       })
       .on('mouseleave', function() {
-        d3.select(this).style('opacity', 0.85);
         tooltip.style('opacity', 0);
-      })
-      .transition()
-      .duration(300)
-      .style('opacity', 0.85);
+      });
 
     // Add process label inside bar
     barsEnter.append('text')
