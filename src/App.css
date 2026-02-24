@@ -9,6 +9,7 @@
 /* Header */
 .app-header {
   background: rgba(15, 23, 42, 0.95);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border-color);
   position: sticky;
@@ -19,7 +20,7 @@
 .header-content {
   max-width: 1600px;
   margin: 0 auto;
-  padding: 16px 24px;
+  padding: 10px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -105,42 +106,42 @@
   max-width: 1600px;
   width: 100%;
   margin: 0 auto;
-  padding: 24px;
+  padding: 16px;
 }
 
 /* Simulation Layout */
 .simulation-layout {
   display: grid;
-  grid-template-columns: 380px 1fr;
-  gap: 24px;
-  min-height: calc(100vh - 180px);
+  grid-template-columns: 320px 1fr;
+  gap: 16px;
+  min-height: calc(100vh - 140px);
 }
 
 /* Comparison Layout */
 .comparison-layout {
   display: grid;
-  grid-template-columns: 380px 1fr;
-  gap: 24px;
+  grid-template-columns: 320px 1fr;
+  gap: 16px;
 }
 
 /* Sidebar */
 .sidebar {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 12px;
 }
 
 /* Content Area */
 .content {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 12px;
 }
 
 .content-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 12px;
 }
 
 /* Footer */

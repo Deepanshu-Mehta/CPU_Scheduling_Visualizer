@@ -3,7 +3,7 @@
 .process-state-table {
   background: var(--card-bg);
   border-radius: 16px;
-  padding: 24px;
+  padding: 16px;
   box-shadow: var(--shadow-md);
   border: 1px solid var(--border-color);
 }
@@ -12,12 +12,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
 .process-state-table .table-header h3 {
   margin: 0;
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   color: var(--text-primary);
 }
 
@@ -34,12 +34,12 @@
 .state-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 12px;
-  margin-bottom: 20px;
+  gap: 10px;
+  margin-bottom: 14px;
 }
 
 .process-card {
-  padding: 16px;
+  padding: 12px;
   border-radius: 12px;
   background: var(--bg-secondary);
   border: 2px solid var(--border-color);

@@ -3,7 +3,7 @@
 .gantt-chart-container {
   background: var(--card-bg);
   border-radius: 16px;
-  padding: 24px;
+  padding: 16px;
   box-shadow: var(--shadow-md);
   border: 1px solid var(--border-color);
   position: relative;
@@ -13,7 +13,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
   flex-wrap: wrap;
   gap: 12px;
 }
@@ -72,7 +72,7 @@
 
 .zoom-level {
   font-size: 0.8rem;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   color: var(--text-secondary);
   min-width: 40px;
   text-align: center;
@@ -130,7 +130,7 @@
 .gantt-chart-container .x-axis text {
   fill: var(--text-secondary);
   font-size: 11px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
 }
 
 .gantt-chart-container .axis-label {
@@ -178,7 +178,7 @@
   height: 18px;
   border-radius: 4px;
   flex-shrink: 0;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Striped pattern for context switch */
@@ -217,7 +217,7 @@
   }
   to {
     transform: scaleX(1);
-    opacity: 0.85;
+    opacity: 1;
   }
 }
 
