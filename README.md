@@ -2,47 +2,48 @@
 
 An expert-grade Operating System simulation tool designed to bridge the gap between theoretical scheduling algorithms and practical kernel behavior. This visualizer provides a high-fidelity, interactive environment to observe how a CPU manages processes under varying workloads and realistic constraints like context-switching overhead.
 
-![CPU Scheduling Visualizer](https://img.shields.io/badge/React-18-blue?logo=react) ![Vite](https://img.shields.io/badge/Vite-7-purple?logo=vite) ![D3.js](https://img.shields.io/badge/D3.js-7-orange?logo=d3.js) ![License](https://img.shields.io/badge/License-MIT-green)
+![CPU Scheduling Visualizer](https://img.shields.io/badge/React-18-blue?logo=react) ![Vite](https://img.shields.io/badge/Vite-7-purple?logo=vite) ![D3.js](https://img.shields.io/badge/D3.js-7-orange?logo=d3.js) ![Vercel](https://img.shields.io/badge/Vercel-Deployed-black?logo=vercel) ![License](https://img.shields.io/badge/License-MIT-green)
+
+---
 
 ## ✨ Key Features
 
+### 🏢 Premium Interactive Dashboard
+A stunning, state-of-the-art landing page featuring:
+- **Magnetic Interaction** - Interactive buttons with physics-based movement.
+- **Three.js Background** - Immersive 3D animated environment.
+- **Micro-animations** - Framer Motion powered transitions and hover effects.
+- **Algorithm Exploration** - Instant preview and direct simulation entry for 7+ algorithms.
+
 ### 🔧 7+ Standard Algorithms
-
 Robust implementations of industry-standard CPU scheduling algorithms:
-
 - **FCFS** - First Come First Serve
 - **SJF** - Shortest Job First (Non-Preemptive)
 - **SRTF** - Shortest Remaining Time First (Preemptive)
 - **Round Robin** - Configurable Time Quantum
 - **Priority Scheduling** - Preemptive & Non-Preemptive with Aging
-- **HRRN** - Highest Response Ratio Next (Math-Transparent)
-- **MLFQ** - Multi-Level Feedback Queue (3 Priority Levels)
+- **HRRN** - Highest Response Ratio Next (Wait-aware Optimization)
+- **MLFQ** - Multi-Level Feedback Queue (Adaptive 3-tier Hierarchy)
 
 ### 📊 High-Fidelity Visualization
-
 | Feature                    | Description                                                                            |
 | -------------------------- | -------------------------------------------------------------------------------------- |
-| **Dynamic Gantt Chart**    | Visualizes execution, idle time, and shaded context-switch overhead with zoom controls |
-| **Dispatcher View**        | Real-time animation of process flow from Ready Queue → Context Switch → CPU            |
-| **MLFQ Hierarchy**         | Specialized dashboard showing process movement across priority queues (Q0, Q1, Q2)     |
-| **Process State Tracking** | 5 states (New → Ready → Running → Waiting → Terminated) with I/O burst simulation      |
+| **Real-time Gantt Chart**  | D3.js powered timeline with zoom, pan, and dynamic duration tooltips                   |
+| **Dispatcher View**        | Visual representation of Ready Queue, I/O Queue, and CPU transitions                   |
+| **MLFQ Dashboard**         | Specialized visualization of process movement across priority queues                    |
+| **State-Machine Tracking** | Complete lifecycle tracking: New → Ready → Running → Waiting → Terminated              |
 
-### 📈 Deep Performance Analytics
+### 📈 Advanced Performance Metrics
+Real-time analytics engine calculating:
+- **Primary Stats** - Avg Turnaround, Wait, and Response times.
+- **System Efficiency** - Accurate CPU Utilization & Throughput (Processes/Time).
+- **Per-Process Breakdown** - Detailed metric table for every simulated process.
+- **Overhead Analysis** - Context-switch count and total overhead impact.
 
-Real-time calculation of:
-
-- **Average Turnaround Time (TAT)**
-- **Average Waiting Time (WT)**
-- **Average Response Time (RT)**
-- **CPU Utilization** (mathematically accurate)
-- **Context Switch Count**
-
-### 🔬 Research Tools
-
-- **Algorithm Comparison Mode** - Side-by-side analysis on identical datasets
-- **Export to JSON** - Raw data for programmatic analysis
-- **Export to PDF** - Formatted reports for academic submissions
-- **Interactive Tutorial** - Guided walkthrough for first-time users
+### 🔬 Research & Export
+- **Comparison Mode** - Run multiple algorithms on the exact same workload side-by-side.
+- **Data Export** - Save simulation results to **JSON** or professional **PDF** reports.
+- **SPA Optimized** - Native Vercel support with integrated client-side routing rewrites.
 
 ---
 
@@ -58,40 +59,20 @@ npm install
 
 # Run development server
 npm run dev
-
-# Build for production
-npm run build
 ```
-
-Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Category             | Technology                 |
-| -------------------- | -------------------------- |
-| **Frontend**         | React 18 + Vite            |
-| **Visualization**    | D3.js                      |
-| **State Management** | React Context + useReducer |
-| **Styling**          | CSS with modern dark theme |
-| **Build Tool**       | Vite                       |
-| **Linting**          | ESLint                     |
-
----
-
-## 📋 Algorithm Comparison
-
-| Algorithm     | Type           | Key Characteristic                        |
-| ------------- | -------------- | ----------------------------------------- |
-| FCFS          | Non-Preemptive | Simple, FIFO ordering                     |
-| SJF           | Non-Preemptive | Optimal for average waiting time          |
-| SRTF          | Preemptive     | Preempts on shorter burst arrival         |
-| Priority (NP) | Non-Preemptive | Priority with aging to prevent starvation |
-| Priority (P)  | Preemptive     | Immediate preemption on higher priority   |
-| Round Robin   | Preemptive     | Time slicing with configurable quantum    |
-| HRRN          | Non-Preemptive | Response ratio: (W + S) / S               |
-| MLFQ          | Preemptive     | 3-queue hierarchy with demotion/promotion |
+| Category             | Technology                           |
+| -------------------- | ------------------------------------ |
+| **Frontend Core**    | React 18 + Vite                      |
+| **Visualization**    | D3.js v7                             |
+| **Animations**       | Framer Motion + Three.js             |
+| **Icons**            | Lucide React                         |
+| **State Management** | React Context + useReducer           |
+| **Deployment**       | Vercel (SPA-configured)              |
 
 ---
 
@@ -99,24 +80,13 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ```
 src/
-├── core/           # PCB, Queues data structures
-├── algorithms/     # All scheduling algorithm implementations
-├── simulation/     # SimulationController with requestAnimationFrame
-├── context/        # React Context for state management
-├── components/     # UI components (tables, controls, metrics)
-├── visualization/  # D3.js Gantt chart
-└── utils/          # Export utilities (JSON, PDF)
+├── core/           # PCB & Queue data structures
+├── algorithms/     # Pure functional algorithm logic
+├── simulation/     # Tick-by-tick Simulation Controller
+├── components/     # UI Design System & Component Library
+├── visualization/  # D3.js Visualization components
+└── pages/          # Dashboard & Main Landing
 ```
-
----
-
-## 🎓 Educational Use
-
-This tool is designed for:
-
-- **Operating Systems courses** - Demonstrate scheduling concepts visually
-- **Research projects** - Compare algorithm performance with exportable data
-- **Self-learning** - Interactive tutorial guides new users
 
 ---
 
@@ -126,12 +96,6 @@ MIT License - See [LICENSE](LICENSE) for details.
 
 ---
 
-## 🤝 Contributing
-
-Contributions are welcome! Please open an issue or submit a pull request.
-
----
-
 <div align="center">
-  <strong>Built with ❤️ for OS enthusiasts</strong>
+  <strong>Built with ❤️ for OS enthusiasts and CS students</strong>
 </div>
